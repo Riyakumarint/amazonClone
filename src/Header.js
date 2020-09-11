@@ -29,6 +29,7 @@ function Header() {
                 {/* logo */}
             </div>
             <div className="header__nav">
+                <Link to ='/login'>
                 <div className="header__option">
                     <span className="header__optionlineOne">
                         Hello riya</span>
@@ -36,6 +37,7 @@ function Header() {
                         Sign in</span>
                     
                 </div>
+                </Link>
                 <div className="header__option">
                 <span className="header__optionlineOne">
                         Returns</span>
