@@ -1,14 +1,44 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import './Payment.css';
 import { useStateValue } from './StateProvider';
 import CheckoutProduct from './CheckoutProduct';
+import {Link} from "react-router-dom";
+import { CardElements, useStripe, useElements } from '@stripe/react-stripe-js';
+import CurrencyFormat from 'react-currency-format';
+import { getBasketTotal } from './reducer'
 
 function Payment() {
-const [{basket, user},dispatch]= useStateValue();
+
+    const [{basket, user},dispatch]= useStateValue();
+
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const [error, setError] = useState(null);
+    const [disabled, setDisabled] = useState(true);
+    
+    const handleSubmit = e => {
+        // do all  the fancy stripe stuff...
+    }
+
+    const handleChange = e => {
+        // Listen for changes in the CardElement
+        // and display any errors as the customer types their card details
+        setDisabled(event.empty);
+        setError(event.error ? event.error.message : "" );
+    }
 
     return (
         <div className="payment">
             <div className="payment__container">
+                <h1>
+                    Checkout 
+                    (<Link to = '/checkout'>{basket?.length} items
+                    </Link>)
+                </h1>
+                
+                
+                
                 {/* Payment section - delivery address */}
                 <div className='payment__section'>
                     <div className='payment__title'>
@@ -23,7 +53,6 @@ const [{basket, user},dispatch]= useStateValue();
 
                 {/* Payment section - Review Items */}
                 <div className='payment__section'>
-                    <div className='payment__review'>
                     <div className='payment__title'>
                         <h3>Review items and delivery</h3>
                     </div>
@@ -38,19 +67,35 @@ const [{basket, user},dispatch]= useStateValue();
                                 />
                         ))}
                     </div>
-                    </div>
                 </div>
 
 
                 {/* Payment section - Payment method */}
                 <div className='payment__section'>
                     <div className='payment__method'>
-                        
+                        <h3>Payment method</h3>
+                    </div>
+                    <div className="payment__details">
+                        {/* Stripe magic will go*/}
+                        <form onSubmit={handleSubmit}>
+                            <CardElement onChange={handleChange}/>
+
+                            <div className="payment__priceContainer">
+                            <CurrencyFormat
+                                renderText={(value) => (
+                                    <h3>Order Total: {value}</h3>
+                                )}
+                                decimalScale={2}
+                                value={getBasketTotal(basket) }
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                            />
+                            </div>
+                        </form>
                     </div>
                 </div>
-
             </div>
-            
         </div>
     )
 }
