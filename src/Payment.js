@@ -8,9 +8,10 @@ import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from './reducer';
 import axios from './axios';
 
+
 function Payment() {
 
-    const [{ basket, user },dispatch]= useStateValue();
+    const [{ basket, user }, dispatch]= useStateValue();
     const history = useHistory();
 
     const stripe = useStripe();
@@ -29,13 +30,15 @@ function Payment() {
             const response = await axios({
                 method: 'post',
                 // Stripe expects the total in a currencies subunits
-                url: '/payments/create?total=${getBasketTotal(basket)}'
+                url: `/payments/create?total=${getBasketTotal(basket) * 100}`
             });
             setclientSecret(response.data.clientSecret)
         }
 
         getClientSecret();
     }, [basket])
+
+    console.log('THE SECRET IS >>>', clientSecret)
 
     const handleSubmit = async (event) => {
         // do all  the fancy stripe stuff...
@@ -46,12 +49,16 @@ function Payment() {
             payment_method: {
                 card: elements.getElement(CardElement)
             }
-        }).then(({ paymentIntent })=>{
+        }).then(({ paymentIntent }) => {
             // paymentIntent = payment confirmation
 
             setSucceeded(true);
             setError(null)
             setProcessing(false)
+
+            dispatch({
+                type: 'EMPTY_BASKET'
+            })
 
             history.replaceState('/orders')
         })
@@ -145,4 +152,4 @@ function Payment() {
     )
 }
 
-export default Payment;
+export default Payment
