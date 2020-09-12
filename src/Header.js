@@ -39,7 +39,7 @@ function Header() {
                 className="header__option">
                     <span 
                     className="header__optionlineOne">
-                        Hello Guest
+                        Hello {!user ? 'Guest':user.email}
                     </span>
                     
                     <span 
