@@ -11,7 +11,9 @@ import { useStateValue } from "./StateProvider";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-const promise = loadStripe(pk_test_51HQTH8J8AwZ227xYs8gIRNRMNvnYyidtDDXA28opLM4baIc2bC4evtvQO7oXEoWlbEi74CMtZs4SRQbwvwxElbX900S9Js02Vs);
+const promise = loadStripe(
+     "pk_test_51HQTH8J8AwZ227xYs8gIRNRMNvnYyidtDDXA28opLM4baIc2bC4evtvQO7oXEoWlbEi74CMtZs4SRQbwvwxElbX900S9Js02Vs"
+);
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -34,12 +36,11 @@ function App() {
       // the user is logged out
       dispatch({
         type: 'SET_USER',
-        user: null
-
-      })
+        user: null,
+      });
     }
-    })
-  }, [])
+    });
+  }, []);
 
   return  (
     //BEM
@@ -48,23 +49,22 @@ function App() {
        
         
         <Switch>
-        <Route path="/login">
-            <Login />
+          <Route path="/login">
+              <Login />
           </Route>
           <Route path="/checkout">
-          <Header />
-            <Checkout />
+              <Header />
+              <Checkout />
           </Route>
           <Route path="/payment">
-          <Header />
-          <Elements stripe={promise}>
-          <Payment />
-          </Elements>
-            <h1>I am the payment route</h1>
+              <Header />
+              <Elements stripe={promise}>
+                  <Payment />
+              </Elements>
           </Route> 
           <Route path="/">
-          <Header />
-            <Home />
+              <Header />
+              <Home />
           </Route>
         </Switch>
 

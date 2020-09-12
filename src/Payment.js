@@ -3,13 +3,13 @@ import './Payment.css';
 import { useStateValue } from './StateProvider';
 import CheckoutProduct from './CheckoutProduct';
 import {Link} from "react-router-dom";
-import { CardElements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
-import { getBasketTotal } from './reducer'
+import { getBasketTotal } from './reducer';
 
 function Payment() {
 
-    const [{basket, user},dispatch]= useStateValue();
+    const [{ basket, user },dispatch]= useStateValue();
 
     const stripe = useStripe();
     const elements = useElements();
@@ -21,7 +21,7 @@ function Payment() {
         // do all  the fancy stripe stuff...
     }
 
-    const handleChange = e => {
+    const handleChange = event => {
         // Listen for changes in the CardElement
         // and display any errors as the customer types their card details
         setDisabled(event.empty);
@@ -32,9 +32,10 @@ function Payment() {
         <div className="payment">
             <div className="payment__container">
                 <h1>
-                    Checkout 
-                    (<Link to = '/checkout'>{basket?.length} items
-                    </Link>)
+                    Checkout (
+                        <Link to = '/checkout'>{basket?.length} items
+                        </Link>
+                        )
                 </h1>
                 
                 
