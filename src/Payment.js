@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from 'react';
 import './Payment.css';
 import { useStateValue } from './StateProvider';
 import CheckoutProduct from './CheckoutProduct';
-import {Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from './reducer';
@@ -46,7 +46,7 @@ function Payment() {
         event.preventDefault();
         setProcessing(true);
 
-        const payload = await stripe .confirmCardPayment(clientSecret, {
+        const payload = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement)
             }
@@ -73,7 +73,7 @@ function Payment() {
                 type: 'EMPTY_BASKET'
             })
 
-            history.replaceState('/orders')
+            history.replace('/orders')
         })
     }
 
@@ -81,7 +81,7 @@ function Payment() {
         // Listen for changes in the CardElement 
         // and display any errors as the customer types their card details
         setDisabled(event.empty);
-        setError(event.error ? event.error.message : "" );
+        setError(event.error ? event.error.message : "");
     }
 
     return (
@@ -89,8 +89,7 @@ function Payment() {
             <div className="payment__container">
                 <h1>
                     Checkout (
-                        <Link to = '/checkout'>{basket?.length} items
-                        </Link>
+                        <Link to = '/checkout'>{basket?.length} items</Link>
                         )
                 </h1>
                 
@@ -144,14 +143,12 @@ function Payment() {
                                 )}
                                 decimalScale={2}
                                 value={getBasketTotal(basket) }
-                                displayType={'text'}
+                                displayType={"text"}
                                 thousandSeparator={true}
                                 prefix={'$'}
                             />
-                            <button 
-                            disabled={processing || disabled || succeeded }>
-                                <span>{processing? <p>Processing</p>:
-                                "Buy Now"}
+                            <button disabled={processing || disabled || succeeded}>
+                                <span>{processing ? <p>Processing</p> : "Buy Now"}
                                 </span>
                             </button>
                             </div>
