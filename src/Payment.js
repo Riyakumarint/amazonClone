@@ -39,6 +39,7 @@ function Payment() {
     }, [basket])
 
     console.log('THE SECRET IS >>>', clientSecret)
+    console.log("👨", user)
 
     const handleSubmit = async (event) => {
         // do all  the fancy stripe stuff...
@@ -55,7 +56,7 @@ function Payment() {
 
             db
               .collection('users')
-              .doc(user?.id)
+              .doc(user?.uid)
               .collection('orders')
               .doc(paymentIntent.id)
               .set({
