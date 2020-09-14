@@ -4,7 +4,7 @@ import moment from 'moment';
 import CheckoutProduct from './CheckoutProduct';
 import CurrencyFormat from "react-currency-format";
 
-function Order( {order} ) {
+function Order({order}) {
     return (
         <div className='order'>
             <h2>Order</h2>
@@ -27,7 +27,7 @@ function Order( {order} ) {
             <h3 className="order__total">Order Total: {value}</h3>
         )}
         decimalScale={2}
-        value={order.data.amount /100 }
+        value={order.data.amount / 100 }
         displayType={"text"}
         thousandSeparator={true}
         prefix={'$'}
