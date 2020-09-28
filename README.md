@@ -1,3 +1,7 @@
+This is a clone of Amazon, very basic with cart and checkout .
+It is hosted on https://challenge-e7180.web.app/
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
